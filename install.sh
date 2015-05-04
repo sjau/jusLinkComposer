@@ -33,7 +33,7 @@ function installFunc
 function uninstallFunc
 {
         rm "${installPath}${scriptName}.sh"
-        rm "${installDesktopPath}${scriptName}.sh"
+        rm "${installDesktopPath}${scriptName}.desktop"
         rm "${installIconPath}${scriptName}.png"
 }
 
