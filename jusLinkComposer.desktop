@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=jusLinkComposer %u
+Exec=jusLinkComposer.sh %u
 MimeType=application/x-sh;
 Icon=some-icon
 X-DocPath=jusLinkComposer/index.html
@@ -9,4 +9,4 @@ Name=Jus Link Composer
 GenericName=Jus Link Composer
 Comment=Compose URL for Court Decisions
 Categories=Office;
-Icon=juslinkcomposer
+Icon=jusLinkComposer.png

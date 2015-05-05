@@ -3,8 +3,9 @@
 function showMenu
 {
 	menuSelection=$(kdialog --menu "Wähle Gerichtsentscheid aus:"	\
-					BGE  "BGE"		\
-					BGer "unpub. BGer"	\
+					BGE  "BGE"			\
+					BGer "unpub. BGer"		\
+					BVGer "BVGer"			\
 			)
 }
 
@@ -37,19 +38,34 @@ function composeBGer
 
 
 
+function composeBVGer
+{
+        decision=$(kdialog --title "BVGEer Verfahrensnummer" --inputbox "Bitte die Verfahrensnummer im folgenden Format eingeben: 2007/1")
+        decisionURL="http://www.bvger.ch/publiws/pub/cache.jsf?displayName=${decision}"
+        showURL
+}
+
+
+
 function noSelection
 {
 	kdialog --msgbox "Es wurde keine Auswahl getätigt.\n Bitte nochmals versuchen."
 }
 
+
+
 # Show Menu Dialog
 showMenu
+
+
 
 case "${menuSelection}" in
 	BGE)
 		composeBGE ;;
 	BGer)
 		composeBGer ;;
+	BVGer)
+		composeBVGer;;
 	*)
 		noSelection ;;
 esac

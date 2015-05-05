@@ -10,7 +10,7 @@ fi
 curPath=$(pwd)
 installPath="/usr/bin/"
 installDesktopPath="/usr/share/applications/"
-installIconPath="/usr/share/icons/hicolor/22x22/apps/"
+installIconPath="/usr/share/icons/oxygen/22x22/apps/"
 scriptName="jusLinkComposer"
 
 
