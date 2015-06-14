@@ -13,7 +13,11 @@ function showMenu
 
 function showURL
 {
-        kdialog --msgbox "Auf den Entscheid kann mit folgender URL direkt zugegriffen werden\n\n ${decisionURL}"
+        kdialog --msgbox "Auf den Entscheid kann mit folgender URL direkt zugegriffen werden:<br><br><a href='${decisionURL}'>${decisionURL}</a>"
+#        kdialog --title "Urteils-URL" --passivepopup 'Auf den Entscheid kann mit folgender URL direkt zugegriffen werden:<br><br><a href="'${decisionURL}'">'${decisionURL}'</a>'
+#        kdialog --title 'Urteils-URL' --passivepopup '<a href="http://kde.org/">www.kde.org</a>' 10
+ 
+
 }
 
 
@@ -22,7 +26,7 @@ function composeBGE
 {
 	decision=$(kdialog --title "BGE Entscheid" --inputbox "Bitte BGE in folgendem Format eingeben: 140 III 41")
 	decision="${decision// /-}"
-	decisionURL="http://relevancy.bger.ch/cgi-bin/JumpCGI?id=BGE-${decision}&lang=de&zoom=&system="
+	decisionURL="http://relevancy.bger.ch/cgi-bin/JumpCGI?id=BGE-${decision}"
 	showURL
 }
 
