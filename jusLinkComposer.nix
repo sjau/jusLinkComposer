@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   src = fetchgit {
     url = https://github.com/sjau/jusLinkComposer.git;
     rev = "edcecfe407df6722a32d245a10163a3a49869f7c";
-    sha256 = "1kiylwy2dr9lm1zi7ishsdxzb1243dm1v1dydi7ia7hyh6db0gg2";
+    sha256 = "1iwfyqwzdkj55b517bajjh9yc2ym0gm8zkllj080sxxpzrnwlzxn";
   };
 #  src = /home/hyper/Desktop/git-repos/jusLinkComposer;
   installPhase = ''
@@ -23,8 +23,8 @@ stdenv.mkDerivation {
       substituteInPlace $i \
         --replace "jusLinkComposer.sh" "/run/current-system/sw/bin/jusLinkComposer.sh"
     done
-    
-    mkdir -p $out/share/icons/oxygen/base/22x22/apps/
-    cp -n *.png $out/share/icons/oxygen/base/22x22/apps/
+
+    mkdir -p $out/share/icons/hicolor/48x48/apps
+    cp -n *.png $out/share/icons/hicolor/48x48/apps/
   '';
 }
