@@ -2,7 +2,6 @@
 Type=Application
 Exec=jusLinkComposer.sh %u
 MimeType=application/x-sh;
-Icon=some-icon
 X-DocPath=jusLinkComposer/index.html
 Terminal=false
 Name=Jus Link Composer

@@ -10,7 +10,7 @@ stdenv.mkDerivation {
 #  src = /home/hyper/Desktop/git-repos/jusLinkComposer;
   installPhase = ''
     mkdir -p $out/bin
-    cp -n *.sh $out/bin/
+    cp -n jusLinkComposer.sh $out/bin/
 # NixOS does currently not provide Kate, so Zenity is chosen over Kate
     for i in $out/bin/*; do
       substituteInPlace $i \
