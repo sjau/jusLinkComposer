@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   src = fetchgit {
     url = https://github.com/sjau/jusLinkComposer.git;
     rev = "d5d95a7fad9cb8b3eab6cf6f7208aee361464140";
-    sha256 = "12lzy9xwraxjdaapkwh208sr4b8nqw5pca3ajl1gvzc6vnm15hwh";
+    sha256 = "1kiylwy2dr9lm1zi7ishsdxzb1243dm1v1dydi7ia7hyh6db0gg2";
   };
 #  src = /home/hyper/Desktop/git-repos/jusLinkComposer;
   installPhase = ''
