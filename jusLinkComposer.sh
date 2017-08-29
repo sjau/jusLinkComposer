@@ -2,7 +2,7 @@
 
 chkCancelButton () {
     if [[ "${1}" -eq 1 ]]; then
-        guiError "Abort. Cancel button pressed."
+        guiError "Abbrechen Taste wurde gedrückt."
         exit 1;
     fi
 }
