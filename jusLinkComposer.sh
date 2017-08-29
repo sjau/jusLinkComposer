@@ -1,75 +1,99 @@
 #!/usr/bin/env bash
 
-function showMenu
-{
-	menuSelection=$(kdialog --menu "Wähle Gerichtsentscheid aus:"	\
-					BGE  "BGE"			\
-					BGer "unpub. BGer"		\
-					BVGer "BVGer"			\
-			)
+chkCancelButton () {
+    if [[ "${1}" -eq 1 ]]; then
+        guiError "Abort. Cancel button pressed."
+        exit 1;
+    fi
 }
 
 
-
-function showURL
-{
-        kdialog --msgbox "Auf den Entscheid kann mit folgender URL direkt zugegriffen werden:<br><br><a href='${decisionURL}'>${decisionURL}</a>"
-#        kdialog --title "Urteils-URL" --passivepopup 'Auf den Entscheid kann mit folgender URL direkt zugegriffen werden:<br><br><a href="'${decisionURL}'">'${decisionURL}'</a>'
-#        kdialog --title 'Urteils-URL' --passivepopup '<a href="http://kde.org/">www.kde.org</a>' 10
- 
-
+guiError () {
+    if type kdialog &>/dev/null; then
+        kdialog --error "${1}"
+    else
+        zenity --error --text="${1}"
+    fi
+    exit 1;
 }
 
 
+guiInput () {
+    local output
+    if type kdialog &>/dev/null; then
+        output=$(kdialog --title "${1}" --inputbox "${2}" "${3}")
+        chkCancelButton "${?}"
+    else
+        output=$(zenity --entry --title "${1}" --text="${2}" --entry-text="${3}")
+        chkCancelButton "${?}"
+    fi
+    printf "%s" "${output}"
+}
 
-function composeBGE
-{
-	decision=$(kdialog --title "BGE Entscheid" --inputbox "Bitte BGE in folgendem Format eingeben: 140 III 41")
+guiInfo () {
+    if type kdialog &>/dev/null; then
+        kdialog --msgbox "${1}"
+    else
+        zenity --info --text="${1}"
+    fi
+}
+
+showMenu () {
+    if type kdialog &>/dev/null; then
+        menuSelection=$(kdialog --checklist "Wähle Gerichtsentscheid aus:" BGE "BGE" off BGer "unpub. BGer" off BVGer "BVGer" off)
+        chkCancelButton "${?}"
+    else
+        menuSelection=$(zenity --list --radiolist --text "Wähle Gerichtsentscheid aus:" --hide-header --column "1" --column "2" FALSE "BGE" FALSE "unpub. BGer" FALSE "BVGer")
+        chkCancelButton "${?}"
+        case "${menuSelection}" in
+            "unpub. BGer")  menuSelection="BGer" ;;
+        esac
+    fi
+}
+
+
+showURL () {
+        guiInfo "Auf den Entscheid kann mit folgender URL direkt zugegriffen werden:
+
+        <a href='${decisionURL}'>${decisionURL}</a>"
+}
+
+
+composeBGE () {
+	decision=$(guiInput "BGE Entscheid" "Bitte BGE in folgendem Format eingeben: 140 III 41")
 	decision="${decision// /-}"
 	decisionURL="http://relevancy.bger.ch/cgi-bin/JumpCGI?id=BGE-${decision}"
 	showURL
 }
 
 
-
-function composeBGer
-{
-	decision=$(kdialog --title "BGEer Verfahrensnummer" --inputbox "Bitte die Verfahrensnummer im folgenden Format eingeben: 4A_369/2007")
-	date=$(kdialog --title "Entscheiddatum" --inputbox "Bitte das Datum des Entscheids im folgenden Format eingeben: 05.11.2007")
+composeBGer () {
+	decision=$(guiInput "BGEer Verfahrensnummer" "Bitte die Verfahrensnummer im folgenden Format eingeben: 4A_369/2007")
+	date=$(guiInput "Entscheiddatum" "Bitte das Datum des Entscheids im folgenden Format eingeben: 05.11.2007")
 	decisionURL="http://jumpcgi.BGer.ch/cgi-bin/JumpCGI?id=${date}_${decision}"
 	showURL
 }
 
 
-
-function composeBVGer
-{
-        decision=$(kdialog --title "BVGEer Verfahrensnummer" --inputbox "Bitte die Verfahrensnummer im folgenden Format eingeben: 2007/1")
+composeBVGer () {
+        decision=$(guiInput "BVGEer Verfahrensnummer" "Bitte die Verfahrensnummer im folgenden Format eingeben: 2007/1")
         decisionURL="http://www.bvger.ch/publiws/pub/cache.jsf?displayName=${decision}"
         showURL
 }
 
 
-
-function noSelection
-{
-	kdialog --msgbox "Es wurde keine Auswahl getätigt.\n Bitte nochmals versuchen."
+noSelection () {
+	guiInfo "Es wurde keine Auswahl getätigt.\n Bitte nochmals versuchen."
 }
-
 
 
 # Show Menu Dialog
 showMenu
 
 
-
 case "${menuSelection}" in
-	BGE)
-		composeBGE ;;
-	BGer)
-		composeBGer ;;
-	BVGer)
-		composeBVGer;;
-	*)
-		noSelection ;;
+	"BGE")     composeBGE ;;
+	"BGer")    composeBGer ;;
+	"BVGer")   composeBVGer;;
+	*)         noSelection ;;
 esac

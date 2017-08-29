@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$(id -u)" != "0" ]; then
-   echo "This script must be run as root" 1>&2
+   printf "%s\n" "This script must be run as root" 1>&2
    exit 1
 fi
 
@@ -15,9 +15,8 @@ scriptName="jusLinkComposer"
 
 
 
-function installFunc
-{
-	cp "${scriptName}" "${installPath}"
+installFunc () {
+	cp "${scriptName}.sh" "${installPath}"
 	chmod 0755 "${installPath}${scriptName}.sh"
 
 	cp "${scriptName}.desktop" "${installDesktopPath}"
@@ -25,13 +24,11 @@ function installFunc
 
 	cp "${scriptName}.png" "${installIconPath}"
 	chmod 0755 "${installIconPath}${scriptName}.png"
-
 }
 
 
 
-function uninstallFunc
-{
+uninstallFunc () {
         rm "${installPath}${scriptName}.sh"
         rm "${installDesktopPath}${scriptName}.desktop"
         rm "${installIconPath}${scriptName}.png"
@@ -39,8 +36,7 @@ function uninstallFunc
 
 
 
-function symlinkFunc
-{
+symlinkFunc () {
 	ln -s "${curPath}/${scriptName}.sh" "${installPath}"
 	chmod 0755 "${installPath}${scriptName}.sh"
 
@@ -55,24 +51,24 @@ function symlinkFunc
 
 
 case "${1}" in
-install) echo "Installing ...."
-	installFunc
-        echo "... Installat complete."
-	;;
-uninstall) echo "Uninstalling ..."
-	uninstallFunc
-	echo "... Uninstall complete."
-    ;;
-symlink) echo  "Symlinking ..."
-	symlinkFunc
-	echo "... Symlink complete"
-    ;;
-*) echo "Use: run as root: ./install.sh PARAMETER"
-   echo ""
-   echo ""
-   echo "Possible options for PARAMETER1"
-   echo "symlink - instead of copying the files to their according location it just symlinks them; this is good for when you update the git repo --> this is RECOMMENDED"
-   echo "install - this will copy the files to their according location"
-   echo "uninstall - this will remove the files from their according location, however it'll leave the config files intact"
-   ;;
+    install) printf "%s\n" "Installing ...."
+        installFunc
+        printf "%s\n" "... Installat complete."
+        ;;
+    uninstall) printf "%s\n" "Uninstalling ..."
+        uninstallFunc
+        printf "%s\n" "... Uninstall complete."
+        ;;
+    symlink) printf "%s\n" "Symlinking ..."
+        symlinkFunc
+        printf "%s\n" "... Symlink complete"
+        ;;
+    *)  printf "%s\n" "Use: run as root: ./install.sh PARAMETER"
+        printf "%s\n" ""
+        printf "%s\n" ""
+        printf "%s\n" "Possible options for PARAMETER1"
+        printf "%s\n" "symlink - instead of copying the files to their according location it just symlinks them; this is good for when you update the git repo --> this is RECOMMENDED"
+        printf "%s\n" "install - this will copy the files to their according location"
+        printf "%s\n" "uninstall - this will remove the files from their according location, however it'll leave the config files intact"
+        ;;
 esac
