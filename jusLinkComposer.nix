@@ -1,4 +1,4 @@
-{stdenv, fetchgit, gnome3 }:
+{stdenv, fetchgit, gnome }:
 stdenv.mkDerivation {
   name = "jusLinkComposer-git";
 # Switch between local testing and using proper git repo
