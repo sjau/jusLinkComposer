@@ -14,7 +14,7 @@ stdenv.mkDerivation {
 # NixOS does currently not provide Kate, so Zenity is chosen over Kate
     for i in $out/bin/*; do
       substituteInPlace $i \
-        --replace zenity ${gnome3.zenity}/bin/zenity
+        --replace zenity ${gnome.zenity}/bin/zenity
     done
 
     mkdir -p $out/share/applications/
