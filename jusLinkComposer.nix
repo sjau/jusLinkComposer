@@ -1,4 +1,4 @@
-{stdenv, fetchgit }:
+{stdenv, fetchgit, zenity }:
 stdenv.mkDerivation {
   name = "jusLinkComposer-git";
 # Switch between local testing and using proper git repo
