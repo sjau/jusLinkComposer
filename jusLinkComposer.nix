@@ -1,4 +1,4 @@
-{stdenv, fetchgit, gnome }:
+{stdenv, fetchgit }:
 stdenv.mkDerivation {
   name = "jusLinkComposer-git";
 # Switch between local testing and using proper git repo
@@ -14,7 +14,7 @@ stdenv.mkDerivation {
 # NixOS does currently not provide Kate, so Zenity is chosen over Kate
     for i in $out/bin/*; do
       substituteInPlace $i \
-        --replace zenity ${gnome.zenity}/bin/zenity
+        --replace zenity ${zenity}/bin/zenity
     done
 
     mkdir -p $out/share/applications/
